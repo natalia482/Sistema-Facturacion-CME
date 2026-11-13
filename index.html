@@ -88,7 +88,7 @@
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            background: white;
+            background: rgb(255, 255, 255);
             box-shadow: 0 0 20px rgba(0,0,0,0.08);
             padding: 30px;
             border-radius: 8px;
@@ -608,8 +608,8 @@
             const tr = document.createElement('tr');
             tr.id = rowId;
             tr.innerHTML = `
-                <td><input type="number" class="form-control form-control-sm text-center border-0 qty-input form-control-compact" value="${qty}" min="1" oninput="calculateTotals()" required></td>
-                <td><input type="text" class="form-control form-control-sm border-0 name-input form-control-compact" value="${name}" placeholder="Descripción de la planta" required></td>
+                <td><input type="number" class="form-control form-control-sm text-center border-0 qty-input form-control-compact " value="${qty}" min="1" oninput="calculateTotals()" required></td>
+                <td><input type="text" class="form-control form-control-sm border-0 name-input form-control-compact text-uppercase" value="${name}" placeholder="Descripción de la planta" required></td>
                 <td><input type="number" class="form-control form-control-sm text-end border-0 price-input form-control-compact" value="${unitPrice}" min="0" step="any" oninput="calculateTotals()" required></td>
                 <td class="text-end fw-bold row-total" style="font-size: 0.85rem;">$ 0</td>
                 <td class="text-center no-print"><button type="button" class="btn btn-outline-danger btn-sm border-0 py-0" onclick="removeRow('${rowId}')"><i class="fa-solid fa-xmark"></i></button></td>
