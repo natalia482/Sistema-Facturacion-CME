@@ -148,11 +148,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Exponer funciones globales para que funcionen con el resto del script
         window.db = db;
         window.fbModules = { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, onSnapshot };
         
-        // Disparar evento de que Firebase está listo
         document.dispatchEvent(new Event('firebase-ready'));
     </script>
 </head>
@@ -397,8 +395,14 @@
                                             <input type="number" id="invDebt" class="form-control form-control-sm text-end border-0 fw-bold form-control-compact" value="0" min="0" oninput="calculateTotals()">
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light text-end text-primary">ABONO REALIZADO:</td>
+                                        <td class="bg-white">
+                                            <input type="number" id="invDeposit" class="form-control form-control-sm text-end border-0 fw-bold form-control-compact text-primary" value="0" min="0" oninput="calculateTotals()">
+                                        </td>
+                                    </tr>
                                     <tr class="bg-corporate-header">
-                                        <td class="fw-bold text-end text-success">TOTAL FACTURA:</td>
+                                        <td class="fw-bold text-end text-success">TOTAL A PAGAR / SALDO:</td>
                                         <td class="text-end fw-bold text-success bg-white">
                                             <span id="lblTotal">$ 0</span>
                                         </td>
@@ -592,6 +596,7 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('invDate').value = today;
             document.getElementById('invShippingDate').value = today;
+            document.getElementById('invDeposit').value = 0;
             
             const nextNum = invoices.length > 0 ? Math.max(...invoices.map(i => parseInt(i.number) || 0)) + 1 : 391;
             document.getElementById('invNumber').value = nextNum;
@@ -613,6 +618,7 @@
             document.getElementById('invClient').value = inv.client;
             document.getElementById('invStatus').value = inv.status || 'Pendiente';
             document.getElementById('invDebt').value = inv.debt || 0;
+            document.getElementById('invDeposit').value = inv.deposit || 0;
             
             const pSize = inv.paperSize || 'carta';
             document.getElementById('paperSizeSelect').value = pSize;
@@ -671,8 +677,11 @@
             });
 
             const debt = parseFloat(document.getElementById('invDebt').value) || 0;
+            const deposit = parseFloat(document.getElementById('invDeposit').value) || 0;
+            const totalInvoice = (subtotal + debt) - deposit;
+
             document.getElementById('lblSubtotal').innerText = '$ ' + formatNumber(subtotal);
-            document.getElementById('lblTotal').innerText = '$ ' + formatNumber(subtotal + debt);
+            document.getElementById('lblTotal').innerText = '$ ' + formatNumber(totalInvoice >= 0 ? totalInvoice : 0);
         }
 
         async function saveInvoice() {
@@ -687,6 +696,7 @@
             const status = document.getElementById('invStatus').value;
             const paperSize = document.getElementById('paperSizeInput').value;
             const debt = parseFloat(document.getElementById('invDebt').value) || 0;
+            const deposit = parseFloat(document.getElementById('invDeposit').value) || 0;
 
             const items = [];
             let subtotal = 0;
@@ -698,8 +708,10 @@
                 subtotal += (qty * unitPrice);
             });
 
+            const total = (subtotal + debt) - deposit;
+
             const invoiceData = {
-                number, date, shippingDate, client, status, paperSize, items, debt, subtotal, total: subtotal + debt
+                number, date, shippingDate, client, status, paperSize, items, debt, deposit, subtotal, total: total >= 0 ? total : 0
             };
 
             const { collection, addDoc, updateDoc, doc } = window.fbModules;
