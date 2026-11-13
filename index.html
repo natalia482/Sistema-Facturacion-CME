@@ -211,7 +211,7 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por cliente o factura..." onkeyup="filterInvoices()">
+                            <input type="text" id="searchInput" class="form-control text-uppercase" placeholder="Buscar por cliente o factura..." onkeyup="filterInvoices()">
                         </div>
                         <div class="col-md-4">
                             <select id="filterSort" class="form-select" onchange="renderInvoiceList()">
@@ -325,7 +325,7 @@
                                 <tr>
                                     <td class="fw-bold bg-success text-white" style="width: 15%;">FACTURA N°</td>
                                     <td style="width: 30%;" class="bg-white">
-                                        <input type="text" id="invNumber" class="form-control form-control-sm text-center fw-bold border-0 form-control-compact" style="max-width: 120px; margin: 0 auto;" required placeholder="Ej: 391">
+                                        <input type="text" id="invNumber" class="form-control form-control-sm text-center fw-bold border-0 form-control-compact text-uppercase" style="max-width: 120px; margin: 0 auto;" required placeholder="Ej: 391">
                                     </td>
                                     <td class="fw-bold bg-success text-white" style="width: 18%;">FECHA EMISIÓN</td>
                                     <td style="width: 37%;" class="bg-white">
@@ -348,7 +348,7 @@
                                 <tr>
                                     <td class="fw-bold bg-success text-white">CLIENTE</td>
                                     <td colspan="3" class="bg-white text-start">
-                                        <input type="text" id="invClient" class="form-control form-control-sm fw-bold border-0 form-control-compact" required placeholder="Nombre completo del cliente">
+                                        <input type="text" id="invClient" class="form-control form-control-sm fw-bold border-0 form-control-compact text-uppercase" required placeholder="Nombre completo del cliente">
                                     </td>
                                 </tr>
                             </tbody>
@@ -639,7 +639,7 @@
             tr.id = rowId;
             tr.innerHTML = `
                 <td><input type="number" class="form-control form-control-sm text-center border-0 qty-input form-control-compact" value="${qty}" min="1" oninput="calculateTotals()" required></td>
-                <td><input type="text" class="form-control form-control-sm border-0 name-input form-control-compact" value="${name}" placeholder="Descripción de la planta" required></td>
+                <td><input type="text" class="form-control form-control-sm border-0 name-input form-control-compact text-uppercase" value="${name}" placeholder="Descripción de la planta" required></td>
                 <td><input type="number" class="form-control form-control-sm text-end border-0 price-input form-control-compact" value="${unitPrice}" min="0" step="any" oninput="calculateTotals()" required></td>
                 <td class="text-end fw-bold row-total" style="font-size: 0.85rem;">$ 0</td>
                 <td class="text-center no-print"><button type="button" class="btn btn-outline-danger btn-sm border-0 py-0" onclick="removeRow('${rowId}')"><i class="fa-solid fa-xmark"></i></button></td>
