@@ -186,7 +186,7 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-4">
-                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por cliente o factura..." onkeyup="filterInvoices()">
+                            <input type="text" id="searchInput" class="form-control text-uppercase" placeholder="Buscar por cliente o factura..." onkeyup="filterInvoices()">
                         </div>
                         <div class="col-md-4">
                             <select id="filterSort" class="form-select" onchange="renderInvoiceList()">
@@ -323,7 +323,7 @@
                                 <tr>
                                     <td class="fw-bold bg-success text-white">CLIENTE</td>
                                     <td colspan="3" class="bg-white text-start">
-                                        <input type="text" id="invClient" class="form-control form-control-sm fw-bold border-0 form-control-compact" required placeholder="Nombre completo del cliente">
+                                        <input type="text" id="invClient" class="form-control form-control-sm fw-bold border-0 form-control-compact text-uppercase" required placeholder="Nombre completo del cliente">
                                     </td>
                                 </tr>
                             </tbody>
